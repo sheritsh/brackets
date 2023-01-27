@@ -1,6 +1,6 @@
 module.exports = function check(str, bracketsConfig) {
   // your solution
-  
+
   let openBrackets = [];
   let closeBrackets = [];
   let bracketsStack = [];
@@ -22,14 +22,17 @@ module.exports = function check(str, bracketsConfig) {
 
   let strBracketsException = bracketsException.toString();
 
-  // traversal throug str 
+  // traversal throug str
   for (i in str) {
     let bracketType;
 
     // make decision Open or Close current bracket
     // 1 - Open
     // 2 - Close
-    if ((openBrackets.includes(str[i]) && !strBracketsException.includes(str[i])) || (strBracketsException.includes(str[i]) && !bracketsStack.includes(str[i]))) {
+    if ((openBrackets.includes(str[i]) &&
+         !strBracketsException.includes(str[i])) ||
+        (strBracketsException.includes(str[i]) &&
+         !bracketsStack.includes(str[i]))) {
       bracketType = 1;
     } else if (closeBrackets.includes(str[i])) {
       bracketType = 2;
@@ -42,21 +45,21 @@ module.exports = function check(str, bracketsConfig) {
       bracketsStack.push(str[i]);
       unclosedBracketsCounter++;
     } else if (bracketType == 2) {
-        if (unclosedBracketsCounter != 0) {
-          let bracketIndex = closeBrackets.indexOf(str[i]);
-          if (openBrackets.indexOf(bracketsStack[bracketsStack.length-1]) == bracketIndex) {
-            bracketsStack.pop();
-            unclosedBracketsCounter--;
-          } else {
-            // error: 'wrong bracket order'
-            return false;
-          }
+      if (unclosedBracketsCounter != 0) {
+        let bracketIndex = closeBrackets.indexOf(str[i]);
+        if (openBrackets.indexOf(bracketsStack[bracketsStack.length - 1]) ==
+            bracketIndex) {
+          bracketsStack.pop();
+          unclosedBracketsCounter--;
         } else {
-          // error: 'there are more closing brackets than opening brackets'
+          // error: 'wrong bracket order'
           return false;
         }
-     }
-
+      } else {
+        // error: 'there are more closing brackets than opening brackets'
+        return false;
+      }
+    }
   }
 
   // check our stack
@@ -65,10 +68,4 @@ module.exports = function check(str, bracketsConfig) {
   } else {
     return false;
   }
-  
 }
-
-
-
-
-
